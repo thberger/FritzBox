@@ -143,7 +143,7 @@ public class CallListObserver extends BroadcastReceiver {
   }
 
   protected void getCallListIfInHomeNetworkAsync() {
-    if(userSettings.isCheckOnlyInHomeNetwork() == false || isInHomeNetwork()) {
+    if(!userSettings.isCheckOnlyInHomeNetwork() || isInHomeNetwork()) {
       getCallListAsync();
     }
   }
@@ -160,7 +160,7 @@ public class CallListObserver extends BroadcastReceiver {
   }
 
   protected void getCallListIfInHomeNetworkSynchronously() {
-    if(userSettings.isCheckOnlyInHomeNetwork() == false || isInHomeNetwork()) {
+    if(!userSettings.isCheckOnlyInHomeNetwork() || isInHomeNetwork()) {
       getCallListSynchronously();
     }
   }
@@ -193,7 +193,7 @@ public class CallListObserver extends BroadcastReceiver {
   protected void getCallListAsyncCompleted(GetCallListResponse response) {
     notificationsService.dismissNotification(GETTING_CALL_LIST_NOTIFICATION_TAG);
 
-    if(response.isSuccessful() == false) {
+    if(!response.isSuccessful()) {
       showCouldNotRetrieveCallListNotification(response);
     }
     else {
@@ -202,7 +202,7 @@ public class CallListObserver extends BroadcastReceiver {
   }
 
   protected void showCouldNotRetrieveCallListNotification(GetCallListResponse response) {
-    if(userSettings.isFritzBoxAddressSet() == false && userSettings.isFritzBoxPasswordSet() == false) { // start-up, settings not set yet
+    if(!userSettings.isFritzBoxAddressSet() && !userSettings.isFritzBoxPasswordSet()) { // start-up, settings not set yet
       return;
     }
 
@@ -232,7 +232,7 @@ public class CallListObserver extends BroadcastReceiver {
     if(this.callList.size() > 0) { // don't show all the missed calls on first app run
       for (Call call : newlyRetrievedCalls) {
         if(call.getType() == CallType.MISSED_CALL) {
-          if(this.callList.contains(call) == false) {
+          if(!this.callList.contains(call)) {
             missedCalls.add(call);
           }
           else { // from now on callList only contains already known calls
@@ -306,7 +306,7 @@ public class CallListObserver extends BroadcastReceiver {
       for (int i = 0; i < newlyRetrievedCalls.size(); i++) {
         Call retrievedCall = newlyRetrievedCalls.get(i);
 
-        if(this.callList.contains(retrievedCall) == false) {
+        if(!this.callList.contains(retrievedCall)) {
           this.callList.add(i, retrievedCall);
         }
         else { // the other calls we know already

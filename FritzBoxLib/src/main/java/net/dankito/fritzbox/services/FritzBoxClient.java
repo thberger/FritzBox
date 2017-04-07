@@ -66,7 +66,7 @@ public class FritzBoxClient {
     this.getChallenge(fritzBoxAddress, new GetStringInfoCallback() {
       @Override
       public void completed(GetStringInfoResponse response) {
-        if(response.isSuccessful() == false) {
+        if(!response.isSuccessful()) {
           callback.completed(new LoginResponse(response.getError()));
         }
         else {
@@ -83,7 +83,7 @@ public class FritzBoxClient {
   }
 
   protected void loginCompleted(GetStringInfoResponse loginResponse, LoginCallback callback) {
-    if(loginResponse.isSuccessful() == false) {
+    if(!loginResponse.isSuccessful()) {
       callback.completed(new LoginResponse(loginResponse.getError()));
     }
     else {
@@ -104,7 +104,7 @@ public class FritzBoxClient {
     webClient.getAsync(createDefaultRequestParameters(url), new RequestCallback() {
       @Override
       public void completed(WebClientResponse response) {
-        if(response.isSuccessful() == false) {
+        if(!response.isSuccessful()) {
           callback.completed(new GetStringInfoResponse(response.getError()));
         }
         else {
@@ -127,7 +127,7 @@ public class FritzBoxClient {
       webClient.getAsync(createDefaultRequestParameters(url), new RequestCallback() {
         @Override
         public void completed(WebClientResponse response) {
-          if(response.isSuccessful() == false) {
+          if(!response.isSuccessful()) {
             callback.completed(new GetStringInfoResponse(response.getError()));
           }
           else {
@@ -176,11 +176,11 @@ public class FritzBoxClient {
    *             when an exception during communication occurred.
    */
   public void getCallListAsync(final GetCallListCallback callback) {
-    if(isLoggedIn() == false) {
+    if(!isLoggedIn()) {
       loginAsync(new LoginCallback() {
         @Override
         public void completed(LoginResponse response) {
-          if(response.isSuccessful() == false) {
+          if(!response.isSuccessful()) {
             callback.completed(new GetCallListResponse(response.getError()));
           }
           else {
@@ -200,7 +200,7 @@ public class FritzBoxClient {
     webClient.getAsync(createDefaultRequestParameters(url), new RequestCallback() {
       @Override
       public void completed(WebClientResponse response) {
-        if(response.isSuccessful() == false) {
+        if(!response.isSuccessful()) {
           callback.completed(new GetCallListResponse(response.getError()));
         }
         else {

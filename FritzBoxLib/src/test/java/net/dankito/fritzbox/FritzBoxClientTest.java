@@ -106,7 +106,7 @@ public class FritzBoxClientTest {
       if(call.getType() == CallType.MISSED_CALL) {
         Assert.assertEquals(0, call.getDuration());
       }
-      else if(call.getType() == CallType.UNKNOWEN) {
+      else if(call.getType() == CallType.UNKNOWN) {
         Assert.assertTrue(call.getDuration() > 0);
         Assert.assertTrue(StringUtils.isNotNullOrEmpty(call.getSubstationName()));
       }

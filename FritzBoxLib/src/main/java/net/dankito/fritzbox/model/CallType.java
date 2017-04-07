@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public enum CallType implements Serializable {
 
-	INCOMMING_CALL(1), MISSED_CALL(2), UNKNOWEN(3), OUTGOING_CALL(4);
+	INCOMMING_CALL(1), MISSED_CALL(2), UNKNOWN(3), OUTGOING_CALL(4);
 
 
 	private final int value;
@@ -46,7 +46,7 @@ public enum CallType implements Serializable {
 		case 4:
 			return OUTGOING_CALL;
 		default:
-			return UNKNOWEN;
+			return UNKNOWN;
 		}
 	}
 

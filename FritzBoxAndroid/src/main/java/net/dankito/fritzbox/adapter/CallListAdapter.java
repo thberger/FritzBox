@@ -84,7 +84,7 @@ public class CallListAdapter extends BaseAdapter {
 
     TextView txtvwCallerNumber = (TextView)convertView.findViewById(R.id.txtvwCallerNumber);
     if(StringUtils.isNotNullOrEmpty(call.getCallerName())) {
-      txtvwCallerNumber.setText(call.getCallerNumber() + " (" + call.getCallerNumber() + ")");
+      txtvwCallerNumber.setText(call.getCallerName() + " (" + call.getCallerNumber() + ")");
     }
     else {
       txtvwCallerNumber.setText(call.getCallerNumber());

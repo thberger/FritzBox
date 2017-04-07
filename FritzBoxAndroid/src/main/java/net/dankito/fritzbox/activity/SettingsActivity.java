@@ -72,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
   protected void setupViews() {
     setContentView(R.layout.fragment_settings);
 
-    if(userSettings.isFritzBoxAddressSet() == false || userSettings.isFritzBoxPasswordSet() == false) {
+    if(!userSettings.isFritzBoxAddressSet() || !userSettings.isFritzBoxPasswordSet()) {
       TextView txtvwHintFritzBoxAddressOrPasswordNotSet = (TextView)findViewById(R.id.txtvwHintFritzBoxAddressOrPasswordNotSet);
       txtvwHintFritzBoxAddressOrPasswordNotSet.setVisibility(View.VISIBLE);
     }
@@ -148,7 +148,7 @@ public class SettingsActivity extends AppCompatActivity {
     fritzBoxClient.loginAsync(edtxtAddress.getText().toString(), edtxtPassword.getText().toString(), new LoginCallback() {
       @Override
       public void completed(LoginResponse response) {
-        if(response.isSuccessful() == false) {
+        if(!response.isSuccessful()) {
           showTestingFritzBoxSettingsFailedMessage(response);
         }
         else {
