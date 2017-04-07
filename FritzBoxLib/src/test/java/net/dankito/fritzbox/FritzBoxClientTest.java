@@ -25,6 +25,9 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Strings.isNullOrEmpty;
+
 /**
  * Created by ganymed on 26/11/16.
  */
@@ -67,10 +70,10 @@ public class FritzBoxClientTest {
 
     try { countDownLatch.await(5, TimeUnit.SECONDS); } catch(Exception ignored) { }
 
-    Assert.assertEquals(1, responseList.size());
+    assertThat(responseList).hasSize(1);
 
     LoginResponse response = responseList.get(0);
-    Assert.assertTrue(response.isSuccessful());
+    assertThat(response.isSuccessful()).isTrue();
   }
 
 
@@ -89,26 +92,26 @@ public class FritzBoxClientTest {
 
     try { countDownLatch.await(5, TimeUnit.MINUTES); } catch(Exception ignored) { }
 
-    Assert.assertEquals(1, responseList.size());
+    assertThat(responseList).hasSize(1);
 
     GetCallListResponse response = responseList.get(0);
-    Assert.assertTrue(response.isSuccessful());
-    Assert.assertTrue(response.getCallList().size() > 0);
+    assertThat(response.isSuccessful()).isTrue();
+    assertThat(response.getCallList().size() > 0 ).isTrue();
 
     for(Call call : response.getCallList()) {
-      if("Unbekannt".equals(call.getCallerName()) == false) {
+      if(!"Unbekannt".equals(call.getCallerName())) {
         Assert.assertTrue(StringUtils.isNotNullOrEmpty(call.getCallerNumber()));
       }
-      Assert.assertNotNull(call.getDate());
-      Assert.assertNotNull(call.getType());
-      Assert.assertTrue(StringUtils.isNotNullOrEmpty(call.getSubstationNumber()));
+      assertThat(call.getDate()).isNotNull();
+      assertThat(call.getType()).isNotNull();
+      assertThat(call.getSubstationNumber()).isNotEmpty();
 
       if(call.getType() == CallType.MISSED_CALL) {
-        Assert.assertEquals(0, call.getDuration());
+        assertThat(call.getDuration()).isEqualTo(0);
       }
       else if(call.getType() == CallType.UNKNOWN) {
-        Assert.assertTrue(call.getDuration() > 0);
-        Assert.assertTrue(StringUtils.isNotNullOrEmpty(call.getSubstationName()));
+        assertThat(call.getDuration()).isGreaterThan(0);
+        assertThat(call.getSubstationName()).isNotEmpty();
       }
     }
   }
